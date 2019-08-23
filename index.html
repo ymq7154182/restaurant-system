@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>食堂菜单评价</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1068123_pyxd3y13opq.css">
+
+    <title>cc</title>
+  </head>
+  <body>
+    <div id="app-box"></div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+      if (location.href.split('useropenid=').length === 2) {
+        const arr = location.href.split(/[\?\&]/);
+        const obj = {}
+        arr.map(item => {
+          if (item.indexOf('=') !== -1) {
+            obj[item.split('=')[0]] = item.split('=')[1]
+          } else {
+            obj.baseUrl = item
+          }
+        })
+        console.log(obj)
+        localStorage.setItem('openid', obj.useropenid)
+        localStorage.setItem('userimg', encodeURI(obj.headimgurl).replace(/%253A/g, ':').replace(/%252F/g, '/'))
+        if (typeof obj.useropenid !== 'undefined') {
+          // location.href = obj.baseUrl
+            // + '/#/' + obj.path
+        }
+      }
+    </script>
+  </body>
+</html>
