@@ -6,29 +6,74 @@
     <div class="overroll-wrapper" v-else ref="overrollWrapper">
       <div class="overroll-content">
         <div class="overroll-title">本周菜品</div>
-        <over-percent :good="foodGood" :bad="foodBad"></over-percent>
-        <food-percent :foodtotal="foodPerTotal"
-                      :foodPeopleNumber="dishEvaluationPeopleNumber"
-                      :goodtotal="foodTotalfavorite"
-                      :badtotal="totalFoodBad"
-                      :foodCommon="totalCommon">
+        <!--<over-percent :good="foodGood" :bad="foodBad" :data1="data2"></over-percent>-->
+        <div style="margin-bottom: 30px;margin-left: -30px;padding-right: 30px">
+          <div id="mycharts" style="width: 350px;height: 400px;margin: 0 auto"></div>
+        </div>
+        <div class="circlehome">
+          <div class="circle1">
+            <span class="words">{{dishEvaluationPeopleNumber}}</span>
+            <!--<div class="words">-->
+              <!--<span>dfwef</span>-->
+            <!--</div>-->
+          </div>
+          <div class="circle2">
+            <span class="words2">{{foodPerTotal}}</span>
+          </div>
+        </div>
+        <div class="circlehome2">
+          <div>
+            <span class="words3">菜品评价总人数</span>
+          </div>
+          <div>
+            <span class="words3">菜品评价条数</span>
+          </div>
+        </div>
 
-        </food-percent>
+        <!--<food-percent :foodtotal="foodPerTotal"-->
+                      <!--:foodPeopleNumber="dishEvaluationPeopleNumber"-->
+                      <!--:goodtotal="foodTotalfavorite"-->
+                      <!--:badtotal="totalFoodBad"-->
+                      <!--:foodCommon="totalCommon">-->
+
+        <!--</food-percent>-->
 
         <over-list @setOneShow="setOneShow" @setCurOne="setCurOne" :text="'最喜欢'" :type="'food'" :list="foodGoodList"></over-list>
         <over-list @setOneShow="setOneShow" @setCurOne="setCurOne" :text="'最不喜欢'" :type="'food'" :list="foodBadList"></over-list>
       <!-- </div> -->
       <!-- <div class="overroll-content"> -->
         <div class="overroll-title">本周服务</div>
-        <over-percent :good="serviceGood" :bad="serviceBad"></over-percent>
+        <!--<over-percent :good="serviceGood" :bad="serviceBad"></over-percent>-->
+        <div style="margin-bottom: 30px;margin-left: -30px;padding-right: 30px">
+          <div id="mycharts2" style="width: 350px;height: 400px;margin: 0 auto"></div>
+        </div>
+        <div class="circlehome">
+          <div class="circle1">
+            <span class="words">{{serviceEvaPeopleNumber}}</span>
+            <!--<div class="words">-->
+            <!--<span>dfwef</span>-->
+            <!--</div>-->
+          </div>
+          <div class="circle2">
+            <span class="words2">{{servicePerTotal}}</span>
+          </div>
+        </div>
+        <div class="circlehome2">
+          <div>
+            <span class="words3">服务评价总人数</span>
+          </div>
+          <div>
+            <span class="words3">服务评价条数</span>
+          </div>
+        </div>
 
-        <service-percent :servicetotal="servicePerTotal"
-                         :servicePeopleNumber="serviceEvaPeopleNumber"
-                         :servicegoodtotal="Servicelike"
-                         :servicebadtotal="ServiceTotalBad"
-                         :serviceCommon="CommonService">
+        <!--<service-percent :servicetotal="servicePerTotal"-->
+                         <!--:servicePeopleNumber="serviceEvaPeopleNumber"-->
+                         <!--:servicegoodtotal="Servicelike"-->
+                         <!--:servicebadtotal="ServiceTotalBad"-->
+                         <!--:serviceCommon="CommonService">-->
 
-        </service-percent>
+        <!--</service-percent>-->
 
         <over-list @setOneShow="setOneShow" @setCurOne="setCurOne" :text="'最喜欢'" :type="'service'" :list="serviceGoodList"></over-list>
         <over-list @setOneShow="setOneShow" @setCurOne="setCurOne" :text="'最不喜欢'" :type="'service'" :list="serviceBadList"></over-list>
@@ -45,7 +90,8 @@
         <div class="one-info">
           <div class="name">{{curOne.dishname}}</div>
           <div class="meal">{{curOne.meal}}</div>
-          <div class="desp">{{curOne.dishdesc || '暂无描述'}}</div>
+          <!--<div class="desp">{{curOne.dishdesc || '暂无描述'}}</div>-->
+          <div class="desp">{{curOne.dishdesc}}</div>
         </div>
       </div>
     </popup>
@@ -95,7 +141,17 @@ export default {
       totalFoodBad: '',
       Servicelike: '',
       CommonService: '',
-      ServiceTotalBad: ''
+      ServiceTotalBad: '',
+      data2: [
+        {value: 335, name: '不满意'},
+        {value: 310, name: '一般', itemStyle: {color: '#D48265'}},
+        {value: 234, name: '满意', itemStyle: {color: '#91C7AE'}}
+      ],
+      data3: [
+        {value: 335, name: '不满意'},
+        {value: 310, name: '一般', itemStyle: {color: '#D48265'}},
+        {value: 234, name: '满意', itemStyle: {color: '#91C7AE'}}
+      ]
     }
   },
   props: {
@@ -125,8 +181,13 @@ export default {
   },
   mounted () {
     console.log('mounted', this.nowWeek, this.userRole, this.nowCamp)
+
     this.initOverroll()
     // this.getData()
+  },
+  updated () {
+    this.initcharts()
+    this.initcharts2()
   },
   methods: {
     setOneShow (flag) {
@@ -178,12 +239,15 @@ export default {
 
           // 菜品满意数
           this.foodTotalfavorite = this.getPercent(res.data.statisticsinfo.totalFavorite) || '0'
+          this.data2[2].value = this.foodTotalfavorite
 
           // 菜品一般数
           this.totalCommon = this.getPercent(res.data.statisticsinfo.totalCommonDish) || '0'
+          this.data2[1].value = this.totalCommon
 
           // 菜品不满意数
           this.totalFoodBad = this.getPercent(res.data.statisticsinfo.totalDishBad) || '0'
+          this.data2[0].value = this.totalFoodBad
           // 服务
           this.serviceGood = this.getPercent(res.data.statisticsinfo.serviceSatisfactionRate) || '0'
           this.serviceBad = this.getPercent(res.data.statisticsinfo.serviceDissatisfactionRate) || '0'
@@ -197,16 +261,121 @@ export default {
 
           // 服务满意数
           this.Servicelike = this.getPercent(res.data.statisticsinfo.totalServicelike) || '0'
+          this.data3[2].value = this.Servicelike
 
           // 服务一般数
           this.CommonService = this.getPercent(res.data.statisticsinfo.totalCommonService) || '0'
+          this.data3[1].value = this.CommonService
 
           // 服务不满意数
           this.ServiceTotalBad = this.getPercent(res.data.statisticsinfo.totalServiceBad) || '0'
+          this.data3[0].value = this.ServiceTotalBad
           this.$nextTick(() => {
             this._initScroll()
           })
         }
+      })
+    },
+    initcharts () {
+      let myChart = this.$echarts.init(document.getElementById('mycharts'))
+      myChart.setOption({
+        title: {
+          text: '本周菜品用户评价反馈情况',
+          // subtext: '纯属虚构',
+          x: 60
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          // orient: 'vertical',
+          // bottom: -25,
+          // left: 'center',
+          x: 'center',
+          y: 'bottom',
+          data: [ '满意', '一般', '不满意' ]
+        },
+        // toolbox: {
+        //   show: true,
+        //   feature: {
+        //     mark: { show: true },
+        //     dataView: { show: true, readOnly: false },
+        //     magicType: {
+        //       show: true,
+        //       type: [ 'pie', 'funnel' ]
+        //     },
+        //     restore: {show: true},
+        //     saveAsImage: {show: true}
+        //   }
+        // },
+        series: [
+          {
+            name: '本周菜品',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: this.data2,
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      })
+    },
+    initcharts2 () {
+      let myChart = this.$echarts.init(document.getElementById('mycharts2'))
+      myChart.setOption({
+        title: {
+          text: '本周服务用户评价反馈情况',
+          // subtext: '纯属虚构',
+          x: 60
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          // orient: 'vertical',
+          // bottom: -25,
+          // left: 'center',
+          x: 'center',
+          y: 'bottom',
+          data: [ '满意', '一般', '不满意' ]
+        },
+        // toolbox: {
+        //   show: true,
+        //   feature: {
+        //     mark: { show: true },
+        //     dataView: { show: true, readOnly: false },
+        //     magicType: {
+        //       show: true,
+        //       type: [ 'pie', 'funnel' ]
+        //     },
+        //     restore: {show: true},
+        //     saveAsImage: {show: true}
+        //   }
+        // },
+        series: [
+          {
+            name: '本周服务',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: this.data3,
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
       })
     },
     getPercent (str) {
@@ -304,4 +473,70 @@ export default {
     margin-bottom: 4px;
   }
 }
+.circlehome {
+  /*position: absolute;*/
+  height: 80px;
+  width: 320px;
+  //left: 50%;
+  //top: 42%;
+  //transform: translate(-50%, 0);
+  display: flex;
+  margin: 0 auto;
+  padding-right: 30px;
+}
+.circlehome2 {
+  /*position: absolute;*/
+  height: 80px;
+  width: 350px;
+  //left: 50%;
+  //top: 42%;
+  //transform: translate(-50%, 0);
+  display: flex;
+  margin: 0 auto;
+  padding-right: 20px;
+}
+.circlehome2 div {
+  flex: 1;
+  margin-right: 25px;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+.circlehome div {
+  flex: 1;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+.circle1 {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  text-align:center;
+  /*background-color: red;*/
+  border: 2px solid #FF0033;
+}
+.circle2 {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  text-align:center;
+  border: 2px solid #66CCCC;
+}
+  .words {
+    vertical-align:middle;
+    line-height: 80px;
+    color: #FF0033;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .words2 {
+    vertical-align:middle;
+    line-height: 80px;
+    color: #66CCCC;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .words3 {
+    color: #aaa;
+    font-size: 14px;
+  }
 </style>

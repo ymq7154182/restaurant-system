@@ -11,6 +11,9 @@ import { ToastPlugin, ConfirmPlugin, LoadingPlugin, Calendar, DatetimePlugin, Se
 import qs from 'qs'
 import axios from 'axios'
 import 'lib-flexible'
+import echarts from 'echarts'
+import './assets/icon/iconfont.css'
+Vue.prototype.$echarts = echarts
 
 Vue.prototype.$axios = axios
 

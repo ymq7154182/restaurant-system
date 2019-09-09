@@ -14,7 +14,7 @@
       <loading></loading>
     </div>
     <div v-if="" class="rate-wrapper" ref="rateWrapper">
-      <ul v-if="curRateMenu === 0">
+      <ul v-if="curRateMenu === 1">
         <template v-if="!loading && noFood">
           <div class="menu-no-data">
             <no-data></no-data>
@@ -36,14 +36,14 @@
                 class="ques-score-item"
                 :class="{'active': food.suggestion && food.suggestionId === sindex}"
                 v-tap="[setScore, findex, sindex, 'food']">
-                <i :class="['iconfont', quesIcon[sindex]]"></i>    
+                <i :class="['iconfont', quesIcon[sindex]]"></i>
               </div>
             </div>
           </div>
         </li>
         <li v-if="!loading && !noFood" class="rate-item rate-btn" v-tap="[rateFoodAPI]">提交评价</li>
       </ul>
-      <ul v-if="curRateMenu === 1">
+      <ul v-if="curRateMenu === 0">
         <template v-if="!loading && noService">
           <div class="menu-no-data">
             <no-data></no-data>
@@ -66,7 +66,7 @@
                 :class="{'active': qitem.suggestion && qitem.suggestionId === sindex}"
                 v-if="sindex !== 0"
                 v-tap="[setScore, qindex, sindex, 'service']">
-                <i :class="['iconfont', quesIcon[sindex]]"></i>  
+                <i :class="['iconfont', quesIcon[sindex]]"></i>
               </div>
             </template>
             <template v-else>
@@ -99,7 +99,7 @@ export default {
       noFood: false,
       loading: false,
       camps: ['', '校本部', '清华园校区', '双榆树校区'],
-      rateMenu: ['评价菜品', '评价食堂'],
+      rateMenu: ['评价食堂', '评价菜品'],
       curRateMenu: 0,
       curCom: '',
       foods: [],
@@ -409,7 +409,7 @@ export default {
             margin-right: 4px;
             background-size: 12px 12px;
             background-repeat: no-repeat;
-            
+
           }
         }
       }

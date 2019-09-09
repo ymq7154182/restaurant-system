@@ -16,8 +16,10 @@ export default {
     openid () {
       return this.$store.state.user.openid
       // return 'oMXOb1f-ADg5c_IEmSjtcYBEE5-g'
-      // return 'oMXOb1c9bnEjJ_lOKk5FhxYZ2l9w '
-      // return 'oMXOb1Vq-EDxErzpyzoPgjEb19tE'
+      // return 'oMXOb1ePIXkK9I_NKLRMMw8BD-3Y ' // 普通教师
+      // return 'oMXOb1RFg_BcxgJghlMatgePLMBY' // 学生
+      // return 'oMXOb1ePIXkK9I_NKLRMMw8BD-3Y'
+      // return 'oMXOb1SbA65U3odw5hi9hbpgoaHA'
     }
   },
   watch: {
@@ -47,6 +49,7 @@ export default {
         if (res.data.errno === 0) {
           console.log(res.data.data)
           localStorage.setItem('wechatopenid', this.openid)
+          localStorage.setItem('role', res.data.data.user_role)
           this.$store.commit('SET_USR_TYPE', res.data.data.user_role)
           this.$store.commit('SET_CAMPUS', res.data.data.campus_id)
           this.$store.commit('SET_INFO_OBJ', res.data.data)

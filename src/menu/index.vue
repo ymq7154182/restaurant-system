@@ -19,6 +19,9 @@
     <div class="login" v-show="Show">
       <Login :Show="Show" v-on:reg="ds"></Login>
     </div>
+    <div class="stulogin"  v-show="Show1">
+     <StuLogin v-on:closediv="closediv"></StuLogin>
+    </div>
   </div>
 
 
@@ -36,10 +39,11 @@
   import request from '@/utils/request'
   import { userGetDate } from '@/utils/common'
   import Login from '@/menu/login'
+  import StuLogin from '@/menu/stulogin'
 
   export default {
     name: 'cmenu', // 菜单列表页
-    components: { cal, menuHeader, menuList, rateList, overRoll, stuOverRoll, teaOverRoll, Login },
+    components: { cal, menuHeader, menuList, rateList, overRoll, stuOverRoll, teaOverRoll, Login, StuLogin },
     data () {
       return {
         Show: false,
@@ -49,7 +53,10 @@
         nowDate: '',
         nowWeek: '',
         nowCamp: '校本部',
-        camps: ['', '校本部', '清华园校区', '双榆树校区']
+        camps: ['', '校本部', '清华园校区', '双榆树校区'],
+        Show1: false,
+        openid: '',
+        Show2: 1
       }
     },
     computed: {
@@ -70,11 +77,15 @@
       }
     },
     mounted () {
+      this.openid = localStorage.getItem('wechatopenid')
       this.nowDate = userGetDate(new Date())
       this.getWeek()
       this.getCamp()
       this.initNav()
       this.getRole()
+      console.log('fffeeerrrrer')
+      console.log(this.userRole)
+      this.findRole()
       // this.getName()
     },
     methods: {
@@ -83,8 +94,10 @@
           this.curNav = 4
           this.changeNav(4)
         } else {
-          this.curNav = 0
-          this.changeNav(0)
+          this.curNav = 2
+          this.changeNav(2)
+          // this.curNav = 0
+          // this.changeNav(0)
         }
       },
       getCamp () {
@@ -136,6 +149,7 @@
       },
       getRole () {
         if (this.userRole === '3') {
+          this.Show1 = false
           // this.Show = true
           var name = localStorage.getItem('name')
           // var name = this.$store.state.user.username
@@ -146,10 +160,41 @@
           } else {
             this.Show = false
           }
-          // this.$router.push('/login')
-        } else {
-          this.Show = false
         }
+          // this.$router.push('/login')
+        // } else if (this.userRole === '2' && this.Show2 === 0) {
+        //   console.log(this.openid)
+        //   this.Show = false
+        //   this.Show1 = true
+        // } else {
+        //   this.Show = false
+        //   this.Show1 = false
+        // }
+      },
+      findRole () {
+        const url = 'user/findUserCode?openid=' + this.openid + '&role=' + localStorage.getItem('role')
+        request({
+          url: url,
+          method: 'get'
+        }).then(res => {
+          console.log('fffffff')
+          console.log(this.userRole)
+          if (res.data.errno === 115) {
+            this.Show1 = true
+            console.log('fffffffeeeeeeeefff')
+            console.log(this.userRole)
+            // if (this.userRole === '2') {
+            //   this.Show1 = true
+            // } else {
+            //   this.Show1 = false
+            // }
+          } else {
+            // this.Show2 = 1
+            this.Show1 = false
+            console.log('fffffffffee')
+            console.log(this.userRole)
+          }
+        })
       },
       // getName () {
       //   var name = localStorage.getItem('name')
@@ -164,6 +209,10 @@
       ds (msg) {
         this.Show = msg
         console.log(msg)
+      },
+      closediv (msg) {
+        console.log(msg)
+        this.Show1 = msg
       }
     }
   }
@@ -179,5 +228,15 @@
     height: 100%;
     overflow: auto;
     background: rgba(7, 17, 27, 0.8);
+  }
+  .stulogin {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(255, 255,255, 1);
   }
 </style>

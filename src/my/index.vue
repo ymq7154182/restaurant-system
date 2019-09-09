@@ -1,7 +1,11 @@
 <template>
   <div class="my">
-    <user-info></user-info>  
-    <register ></register>  
+    <user-info></user-info>
+    <register ></register>
+    <div class="text">
+      <span @click="feedbacks" style="margin-right: 20px">用户反馈</span>
+      <span @click="usemanuals">使用手册</span>
+    </div>
   </div>
 </template>
 <script>
@@ -23,6 +27,12 @@ export default {
   mounted () {
   },
   methods: {
+    feedbacks () {
+      this.$router.push('/my/feedback')
+    },
+    usemanuals () {
+      this.$router.push('/my/usemanual')
+    }
   }
 }
 </script>
@@ -41,5 +51,10 @@ export default {
       vertical-align: bottom;
       display: inline-block;
     }
+  }
+  .text {
+    width: 170px;
+    margin: 100px auto;
+    font-size: 16px;
   }
 </style>

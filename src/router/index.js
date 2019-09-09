@@ -8,6 +8,8 @@ import returnLayout from '@/layout/returnLayout'
 Vue.use(Router)
 
 const my = () => import('@/my/index')
+const feedback = () => import('@/my/feedback')
+const usemanual = () => import('@/my/usemanual')
 const addMenu = () => import('@/addMenu/index')
 const addFood = () => import('@/addFood/index')
 const register = () => import('@/register/index')
@@ -50,9 +52,20 @@ export default new Router({
       name: 'my0',
       meta: { tab: 'my', title: 'my' },
       children: [
-        {path: '/my', name: 'my', component: my, meta: { title: 'my' }}
+        {path: '/my', name: 'my', component: my, meta: { title: 'my' }},
+        {path: '/my/feedback', name: 'feedback', component: feedback, meta: { title: 'feedback' }},
+        {path: '/my/usemanual', name: 'usemanual', component: usemanual, meta: { title: 'usemanual' }}
       ]
     },
+    // {
+    //   path: '/feedback',
+    //   component: returnLayout,
+    //   name: 'feedback0',
+    //   meta: { tab: 'feedback', title: 'feedback' },
+    //   children: [
+    //     {path: '/feedback', name: 'feedback', component: feedback, meta: { title: 'feedback' }}
+    //   ]
+    // },
     {
       path: '/addFood',
       component: returnLayout,

@@ -11,7 +11,7 @@ export default {
         url: 'http://zhongkeruitong.top/canteen-system/wechat/getSign?url=' + url,
         method: 'get'
       }).then(res => {
-        if (Number(res.data.errno) !== 0) {
+        if (Number(res.data.code) !== 0) {
           console.log('请求失败')
           this.msg = '获取失败'
           this.msgType = 'error'

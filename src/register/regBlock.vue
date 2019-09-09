@@ -22,13 +22,21 @@ export default {
   },
   data () {
     return {
-      openid: localStorage.openid
+      openid: localStorage.openid,
+      // openid: 'oMXOb1SbA65U3odw5hi9hbpgoaHA',
+      role: ''
 
     }
   },
   computed: {
     user () {
-      return Number(this.$store.state.user.userRole)
+      if (Number(this.$store.state.user.userRole) === 0) {
+        return 2
+      } else {
+        return Number(this.$store.state.user.userRole)
+      }
+
+      // return Number(this.role)
     },
     type () {
       if (this.$route.name === 'my') {
@@ -37,7 +45,14 @@ export default {
     }
   },
   mounted () {
+    console.log('fffff')
+    console.log(this.user)
+    console.log(this.openid)
+    // this.openid = localStorage.getItem('wechatopenid')
     this.$store.commit('SET_RETURN_URL', '/menu')
+  },
+  updated () {
+    console.log(this.user)
   },
   methods: {
     reg (form) {
@@ -52,7 +67,7 @@ export default {
         // user_class: form.userClass // 否 String  如 “1班”
       }
       request({
-        url: 'http://www.zhongkeruitong.top/canteen-system/user/register',
+        url: 'http://zhongkeruitong.top/canteen-system/user/register',
         method: 'post',
         data: obj
       }).then(res => {
@@ -73,7 +88,7 @@ export default {
         user_role: form.userRole // 是 int 用户角色 （1：教师 2：学生(家长) 3：食堂工作人员）
       }
       request({
-        url: 'http://www.zhongkeruitong.top/canteen-system/user/switchCampus',
+        url: 'http://zhongkeruitong.top/canteen-system/user/switchCampus',
         method: 'post',
         data: obj
       }).then(res => {

@@ -3,15 +3,15 @@
 
 const user = {
   state: {
-    userRole: '2', // 1 教师 2 学生(家长) 3 食堂工作人员
+    userRole: '', // 1 教师 2 学生(家长) 3 食堂工作人员
     campusId: '',
     showMsg: false,
     msgType: '',
     msg: '',
     returnText: '',
     returnUrl: '',
-    baseUrl: 'http://58.119.112.12:8086',
-    openid: 'oMXOb1Se1Lz0XeC03Q4J0UOhus-8',
+    baseUrl: '',
+    openid: '',
     userImg: '',
     infoObj: {},
     username: ''
@@ -24,7 +24,7 @@ const user = {
       state.campusId = id
     },
     SET_OPENID: (state, id) => {
-      console.log('dd', id)
+      console.log('dds', id)
       state.openid = id
     },
     SET_USER_IMG: (state, img) => {

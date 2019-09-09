@@ -61,10 +61,14 @@
                     <!--</popup>-->
                     <span @click="gotoFood(food)" class="iconfont iconbianji"></span>
                     <span @click="delFood(food)" class="iconfont iconshanchu"></span>
+                    <!--<template v-if="imgurl === food.dishimgurl">-->
+                      <!--<div class="food-img"><img :src="food.dishimgurl"></div>-->
+                      <!--<div class="food-name">{{item.dishname}}</div>-->
+                    <!--</template>-->
                   </div>
                   <div class="content">
                     <h2 class="name">{{food.dishname}}</h2>
-                    <p class="description">{{food.dishdesc}}</p>
+                    <!--<p class="description">{{food.dishdesc}}</p>-->
                     <div class="cart-wrapper">
                       <cartcontrol
                         :partent="'menu'"
@@ -126,6 +130,7 @@ export default {
   data () {
     return {
       oneShow: false,
+      imgurl: '',
       currentIndex: 0,
       wordcolor: 'black',
       init: true,
@@ -289,6 +294,9 @@ export default {
       }
     },
     // 获取每日菜单
+    showImg (food) {
+      this.imgurl = food.dishimgurl
+    },
     getDailyMenu () {
       this.loading = true
       const url = 'rest/getCommentInfo?role=' + this.curRole + '&date=' + this.curDate + '&campus_id=' + this.curCampus
@@ -812,5 +820,17 @@ export default {
 .inline-calendar td.current > span.vux-calendar-each-date {
   background-color: #00a0dc;
 }
+  /*.food-img {*/
+    /*width: 60px;*/
+    /*height: 60px;*/
+    /*padding: 4px 10px;*/
+    /*margin: 0 auto;*/
+    /*img {*/
+      /*width: 100%;*/
+      /*height: 100%;*/
+      /*border-radius: 5px;*/
+      /*opacity: 0.8;*/
+    /*}*/
+  /*}*/
 
 </style>

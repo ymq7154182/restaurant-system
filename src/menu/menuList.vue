@@ -26,7 +26,7 @@
                   </div>
                   <div class="content">
                     <h2 class="name">{{food.dishname}}</h2>
-                    <p class="description">{{food.dishdesc}}</p>
+                    <!--<p class="description">{{food.dishdesc}}</p>-->
                   </div>
                 </li>
               </ul>
