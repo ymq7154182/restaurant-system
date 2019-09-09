@@ -8,7 +8,7 @@ export default {
       const url = encodeURIComponent(window.location.href.split('#')[0])
       console.log('=======', location.href.split('#')[0])
       request({
-        url: 'http://zhongkeruitong.top/canteen-system/wechat/getSign?url=' + url,
+        url: 'http://zhongkeruitong.top/show/canteen-system/wechat/getSign?url=' + url,
         method: 'get'
       }).then(res => {
         if (Number(res.data.code) !== 0) {
@@ -26,7 +26,7 @@ export default {
       let thisurl = this.serverIds
       // alert('我进入了这个方法' + thisurl)
       request({
-        url: 'http://zhongkeruitong.top/canteen-system/wechat/savePicture?serverIds=' + thisurl,
+        url: 'http://zhongkeruitong.top/show/canteen-system/wechat/savePicture?serverIds=' + thisurl,
         method: 'get'
       }).then(res => {
         // alert('这是后端返回的东西：' + res.data)

@@ -61,7 +61,7 @@ export default {
       scrollY: 0,
       selectedFood: {},
       camps: ['', '校本部', '清华园校区', '双榆树校区'],
-      baseUrl: 'http://zhongkeruitong.top:80',
+      baseUrl: 'http://zhongkeruitong.top/show:80',
       defaultImg: 'https://fuss10.elemecdn.com/c/6b/29e3d29b0db63d36f7c500bca31d8jpeg.jpeg?imageView2/1/w/114/h/114'
     }
   },

@@ -41,9 +41,9 @@ export default {
   methods: {
     checkRedict () {
       request({
-        // url: 'http://zhongkeruitong.top/user/getUserInfo?useropenid=' + this.openid,
+        // url: 'http://zhongkeruitong.top/show/user/getUserInfo?useropenid=' + this.openid,
         // url: 'http://localhost:8081/user/getUserInfo?useropenid=' + this.openid,
-        url: 'http://zhongkeruitong.top/canteen-system/user/getUserInfo?useropenid=' + this.openid,
+        url: 'http://zhongkeruitong.top/show/canteen-system/user/getUserInfo?useropenid=' + this.openid,
         method: 'get'
       }).then(res => {
         if (res.data.errno === 0) {

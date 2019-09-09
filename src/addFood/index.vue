@@ -111,7 +111,7 @@
       },
       getFood () {
         request({
-          url: 'http://zhongkeruitong.top/canteen-system/rest/getBaseDishById',
+          url: 'http://zhongkeruitong.top/show/canteen-system/rest/getBaseDishById',
           data: {
             dishid: this.dishid
           },
@@ -138,10 +138,10 @@
         let req = {}
         if (this.dishid !== undefined && this.dishid !== '') {
           // 编辑
-          url = 'http://zhongkeruitong.top/canteen-system/rest/updateBaseDishes'
+          url = 'http://zhongkeruitong.top/show/canteen-system/rest/updateBaseDishes'
         } else {
           // 新增
-          url = 'http://zhongkeruitong.top/canteen-system/rest/insertBaseDishes'
+          url = 'http://zhongkeruitong.top/show/canteen-system/rest/insertBaseDishes'
         }
         // 学生老师
         const tmprole = this.userRole === '老师' ? 1 : 2
